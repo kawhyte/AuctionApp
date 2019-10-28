@@ -10,7 +10,7 @@ mongo.connect("mongodb://127.0.0.1/mongochat", (err, db) => {
   console.log("Mongo DB connected");
 
   //connect to SocketIO
-  client.on("connection", () => {
+  client.on("connection", (socket) => {
     let connect = db.collection("chats");
 
     //funtion to send status
@@ -43,7 +43,7 @@ mongo.connect("mongodb://127.0.0.1/mongochat", (err, db) => {
         // Insert into Database
         chat.insert({ name: name, message: message }, () => {
           client.emit("output", [data]);
-//staus
+        //staus
           sendStatus({ message: "message sent", clear: true });
         });
       }
