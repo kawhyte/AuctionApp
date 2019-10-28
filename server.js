@@ -10,11 +10,27 @@ if(err){
  console.log ( "Mongo DB connected");
 
  //connect to SocketIO
- io.on("connection", () => {
+ client.on("connection", () => {
      let connect =  db.collection('chats');
 
      //funtion to send status
-     sendStatus
+     sendStatus = (s)=>{
+         socket.emit('status',s)
+     }
+
+     //Get chats from mongo collection
+     chat.find().limit(100).sort({_id:1}).toArray((err, res)=>{
+        if(err){
+            throw err;
+        }
+
+        // Emit the message 
+
+        socket.emit('output', res)
+
+     });
+
+     //Handle input events
  })
 
 })
