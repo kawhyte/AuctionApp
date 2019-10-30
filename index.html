@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
     <title>Websocket Real time Auction</title>
     <style>
-        #messages{height:300px;}
+        #messages{height:200px;}
     </style>
 </head>
 <body>
@@ -34,12 +34,15 @@
                             On mobile, this is a paragraph below an image.
                         </p> 
                         <p>
-                            <input type="text" id="username" class="form-control" placeholder="Enter name...">
+                            <input type="text" id="username" class="form-control" placeholder="Enter bidder's name...">
                         </p> 
                         <p>  
                             <input type="number" id="textarea" class="form-control" placeholder="Place Bid..."> 
                             <br>
-                            <button id="clear" class="btn btn-primary">Clear</button>
+                            <!-- <button id="clear" class="btn btn-primary">Clear</button> -->
+                            <!-- <button id="clear" class="btn btn-primary">Clear</button> -->
+                            <a class="f6 link dim br2 ph3 pv2 mb2 dib white bg-navy" href="#0">Place Bid</a>
+                            <a id="clear" class="f6 link dim br2 ph3 pv2 mb2 dib white bg-hot-pink" >Reset Bid History</a>
                          </p> 
 
                     </div>
