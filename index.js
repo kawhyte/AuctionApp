@@ -1,5 +1,5 @@
 const mongo = require('mongodb').MongoClient;
-const client = require('socket.io').listen(3000).sockets;
+const client = require('socket.io').listen(4000).sockets;
 
 // Connect to mongo
 mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
@@ -19,11 +19,11 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
         }
 
         // Get chats from mongo collection
-        chat.find().limit(100).sort({_id:1}).toArray(function(err, res){
+        chat.find().limit(2).sort({_id:1}).toArray(function(err, res){
             if(err){
                 throw err;
             }
-
+console.log(res);
             // Emit the messages
             socket.emit('output', res);
         });

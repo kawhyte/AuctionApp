@@ -5,108 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <title>MongoChat</title>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+    <title>Websocket Real time Auction</title>
     <style>
         #messages{height:300px;}
     </style>
 </head>
 <body>
-    <div class="container">
+        <header class="bg-white black-80 tc pv4 avenir">
+                <h1 class="mt2 mb0 baskerville i fw1 f1">Real Time Auction</h1>
+                <h2 class="mt2 mb0 f6 fw4 ttu tracked">with Websockets</h2>
+               
+
+        </header>
+
+        <div>
+            <div class="fl-ns w-50-ns ph2">
+
+                <img src="http://tachyons.io/img/super-wide.jpg" alt="A bright blue sky" class="w-100 mw7 w5-ns" />
+
+            </div>
+            <div class="fl-ns w-50-ns ph2">
+                <div class="cf-ns nl2 nr2">
+                    <div class="fl-ns w-50-ns ph2">
+                        <p> Current bid:<span> US $10</span> </p> 
+                        <p class="lh-copy">
+                            For desktop, this text is vertically aligned middle, no matter what the height of the image is.
+                            On mobile, this is a paragraph below an image.
+                        </p> 
+                        <p>
+                            <input type="text" id="username" class="form-control" placeholder="Enter name...">
+                        </p> 
+                        <p>  
+                            <input type="number" id="textarea" class="form-control" placeholder="Place Bid..."> 
+                            <br>
+                            <button id="clear" class="btn btn-primary">Clear</button>
+                         </p> 
+
+                    </div>
+                    <div class="fl-ns w-50-ns ph2">
+                        <p>Bid History:</p>  
+
+                        <div class="card">
+                            <div id="messages" class="card-block">
+                                
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+               
+            </div>
+           
+          </div>
+
+
+        <!-- <div class="dt mw6 center pt0 pb5 pv5-m pv6-ns">
+            <div class="db dtc-ns v-mid-ns">
+              <img src="http://tachyons.io/img/super-wide.jpg" alt="A bright blue sky" class="w-100 mw7 w5-ns" />
+            </div>
+            <div class="db dtc-ns v-mid ph2 pr0-ns pl3-ns">
+              <p class="lh-copy">
+                For desktop, this text is vertically aligned middle, no matter what the height of the image is.
+                On mobile, this is a paragraph below an image.
+              </p>
+              <div>
+                hello
+            </div>
+            </div>
+            
+          </div> -->
+
+
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-sm-12">
                 <h1 class="text-center">
-                    MongoChat 
-                    <button id="clear" class="btn btn-danger">Clear</button>
+                    JS Auction
+                    <button id="clear" class="btn btn-primary">Clear</button>
                 </h1>
                 <div id="status"></div>
                 <div id="chat">
-                    <input type="text" id="username" class="form-control" placeholder="Enter name...">
-                    <br>
                     <div class="card">
                         <div id="messages" class="card-block">
-
+                            
                         </div>
-                    </div>
+                    </div> -->
+                    <!-- <br>
+                    <input type="text" id="username" class="form-control" placeholder="Enter name...">
                     <br>
-                    <textarea id="textarea" class="form-control" placeholder="Enter message..."></textarea>
-                </div>
+                    <input type="number" id="textarea" class="form-control" placeholder="Enter Bid.."> -->
+                    <!-- <textarea id="textarea" type = "number" class="form-control" placeholder="Enter message..."></textarea> -->
+                   
+                <!-- </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 
-    <script>
-        (function(){
-            var element = function(id){
-                return document.getElementById(id);
-            }
-            // Get Elements
-            var status = element('status');
-            var messages = element('messages');
-            var textarea = element('textarea');
-            var username = element('username');
-            var clearBtn = element('clear');
-            // Set default status
-            var statusDefault = status.textContent;
-            var setStatus = function(s){
-                // Set status
-                status.textContent = s;
-                if(s !== statusDefault){
-                    var delay = setTimeout(function(){
-                        setStatus(statusDefault);
-                    }, 4000);
-                }
-            }
-            // Connect to socket.io
-            var socket = io.connect('http://localhost:3000');
-            // Check for connection
-            if(socket !== undefined){
-                console.log('Connected to socket...');
-                // Handle Output
-                socket.on('output', function(data){
-                    //console.log(data);
-                    if(data.length){
-                        for(var x = 0;x < data.length;x++){
-                            // Build out message div
-                            var message = document.createElement('div');
-                            message.setAttribute('class', 'chat-message');
-                            message.textContent = data[x].name+": "+data[x].message;
-                            messages.appendChild(message);
-                            messages.insertBefore(message, messages.firstChild);
-                        }
-                    }
-                });
-                // Get Status From Server
-                socket.on('status', function(data){
-                    // get message status
-                    setStatus((typeof data === 'object')? data.message : data);
-                    // If status is clear, clear text
-                    if(data.clear){
-                        textarea.value = '';
-                    }
-                });
-                // Handle Input
-                textarea.addEventListener('keydown', function(event){
-                    if(event.which === 13 && event.shiftKey == false){
-                        // Emit to server input
-                        socket.emit('input', {
-                            name:username.value,
-                            message:textarea.value
-                        });
-                        event.preventDefault();
-                    }
-                })
-                // Handle Chat Clear
-                clearBtn.addEventListener('click', function(){
-                    socket.emit('clear');
-                });
-                // Clear Message
-                socket.on('cleared', function(){
-                    messages.textContent = '';
-                });
-            }
-        })();
+    <script src="client.js"> 
     </script>
 </body>
 </html>
