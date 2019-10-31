@@ -1,1 +1,1 @@
-# Poker Planning App Using Socket.io, MongoDB
+# Auction App Using Socket.io, MongoDB
