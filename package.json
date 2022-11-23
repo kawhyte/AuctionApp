@@ -19,6 +19,6 @@
   "homepage": "https://github.com/kawhyte/AuctionApp#readme",
   "dependencies": {
     "mongodb": "^2.2.30",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.5.0"
   }
 }
